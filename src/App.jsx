@@ -1,12 +1,8 @@
-import { useState } from "react";
-import "./App.css";
-
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div>
-      <h1>"hello world"</h1>
+    <div className=" m-8 bg-slate-50">
+      <h1 className="text-5xl font-bold text-stone-500">Thank you github!</h1>
+      <h2 className="text-3xl text-black italic py-4">-from high-haseeb</h2>
     </div>
   );
 }
