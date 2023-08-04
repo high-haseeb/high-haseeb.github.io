@@ -13,6 +13,15 @@ module.exports = {
         midA: "#61677A",
         midB: "#D8D9DA",
       },
+      keyframes: {
+        slide: {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
+      },
+      animation: {
+        headline: "slide 4s infinite linear",
+      },
     },
   },
   plugins: [],
