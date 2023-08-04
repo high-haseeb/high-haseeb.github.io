@@ -3,7 +3,7 @@ import Link from "next/link";
 import { animated, useSpring } from "@react-spring/web";
 
 function Navbar() {
-  const [click, toggle] = useState(false);
+  const [click, toggle] = useState(true);
   const springs = useSpring({
     from: { color: "hotpink", x: 0 },
     color: click ? "hotpink" : "lime",
