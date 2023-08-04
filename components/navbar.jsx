@@ -1,22 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { animated, useSpring } from "@react-spring/web";
 
 function Navbar() {
-  const [springs, api] = useSpring(() => ({ from: { x: 0, y: 0 } }));
-  const handleClick = () => {
-    api.start({
-      from: { x: 0, y: 0  },
-      to: { x: 100, y: 100 },
-    });
-  };
+  const [click, toggle] = useState(false);
+  const springs = useSpring({
+    from: { color: "hotpink", x: 0 },
+    color: click ? "hotpink" : "lime",
+    x: click ? 0 : 1,
+    config: { duration: 1000 },
+  });
   return (
     <div className="bg-blackC flex justify-between h-12 items-center">
-      <animated.div style={{ ...springs }} onClick={handleClick}>
-        <Link
-          href={"./"}
-          className="text-stone-300 text-2xl font-bold mr-30 ml-10 italic"
-        >
+      <animated.div
+        style={{
+          color:springs.color,
+          scale: springs.x.to({
+            range: [1, 0],
+            output: [1, 2],
+          }),
+        }}
+        onClick={() => toggle(!click)}
+      >
+        <Link href={"./"} className=" text-2xl font-bold mr-30 ml-10 italic">
           high-haseeb
         </Link>
       </animated.div>
