@@ -56,7 +56,10 @@ svg:hover #right {
 #bolt,
 #base,
 #flames_1,
-#fill {
+#fill,
+#arrow_up,
+#arrow_down,
+#rect{
   fill: var(--white);
   transition: all 100ms linear;
 }
@@ -97,4 +100,13 @@ svg:hover #flames_2{
   transform:translateY(-50%);
   opacity: 1;
   fill: var(--white);
+}
+#arrow_up{
+  transform: translateY(100%);
+}
+svg:hover #arrow_up{
+  transform: translateY(0%);
+}
+svg:hover #arrow_down{
+  transform: translateY(-80%);
 }

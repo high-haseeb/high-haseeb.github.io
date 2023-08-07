@@ -6,13 +6,65 @@ export default function Home() {
           <IconWrapper children={Code()} title={"Code"} />
           <IconWrapper children={Heart()} title={"Handle"} />
           <IconWrapper children={Tea()} title={"Tea"} />
-          <IconWrapper children={Code()} title={"Code"} />
+          <IconWrapper children={Arrow()} title={"Side Up"} />
         </div>
         <div className="col-span-4 row-span-3">
           <Title className="" />
         </div>
       </div>
     </div>
+  );
+}
+function Arrow() {
+  return (
+    <svg
+      width="70"
+      height="70"
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="code" clip-path="url(#clip0_6_2)">
+        <rect id="rect" x="9" y="79" width="83" height="13" />
+        <g id="arrow_down">
+          <g id="Vector">
+            <path
+              d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z"
+            />
+            <path d="M30.7224 8L45.4449 27.5H16L30.7224 8Z" />
+          </g>
+          <g id="Vector_2">
+            <path
+              d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z"
+            />
+            <path
+              d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z"
+            />
+          </g>
+        </g>
+        <g id="arrow_up">
+          <g id="Vector">
+            <path
+              d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z"
+            />
+            <path d="M30.7224 8L45.4449 27.5H16L30.7224 8Z" />
+          </g>
+          <g id="Vector_2">
+            <path
+              d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z"
+            />
+            <path
+              d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z"
+            />
+          </g>
+        </g>
+      </g>
+      <defs>
+        <clipPath id="clip0_6_2">
+          <rect width="100" height="100" />
+        </clipPath>
+      </defs>
+    </svg>
   );
 }
 function Tea() {
@@ -31,50 +83,14 @@ function Tea() {
         />
         <path id="fill" d="M25.5 53H81L78 71H30L25.5 53Z" />
         <g id="flames_1">
-          <rect
-            id="Rectangle 1"
-            x="37"
-            y="22"
-            width="6"
-            height="23"
-          />
-          <rect
-            id="Rectangle 2"
-            x="50"
-            y="10"
-            width="6"
-            height="35"
-          />
-          <rect
-            id="Rectangle 3"
-            x="62"
-            y="27"
-            width="6"
-            height="18"
-          />
+          <rect id="Rectangle 1" x="37" y="22" width="6" height="23" />
+          <rect id="Rectangle 2" x="50" y="10" width="6" height="35" />
+          <rect id="Rectangle 3" x="62" y="27" width="6" height="18" />
         </g>
         <g id="flames_2">
-          <rect
-            id="Rectangle 1_2"
-            x="37"
-            y="69"
-            width="6"
-            height="23"
-          />
-          <rect
-            id="Rectangle 2_2"
-            x="50"
-            y="57"
-            width="6"
-            height="35"
-          />
-          <rect
-            id="Rectangle 3_2"
-            x="62"
-            y="74"
-            width="6"
-            height="18"
-          />
+          <rect id="Rectangle 1_2" x="37" y="69" width="6" height="23" />
+          <rect id="Rectangle 2_2" x="50" y="57" width="6" height="35" />
+          <rect id="Rectangle 3_2" x="62" y="74" width="6" height="18" />
         </g>
       </g>
     </svg>
