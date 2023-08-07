@@ -7,9 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      borderWidth: {
+        6: "6px",
+      },
       fontFamily: {
         open: "var(--font-open-sans)",
-        inter: "var(--font-inter)"
+        inter: "var(--font-inter)",
       },
       colors: {
         blackC: "#000000",

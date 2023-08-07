@@ -21,19 +21,80 @@
     animation-play-state: paused;
   }
 }
+:root {
+  --white: #f5f5f5;
+}
 .material-symbols-outlined {
-  /* transform: scale(3); */
+  color: #f5f5f5;
   font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 200, "opsz" 48;
-}
-.material-symbols-outlined.md-18 {
-  font-size: 18px;
-}
-.material-symbols-outlined.md-24 {
-  font-size: 24px;
-}
-.material-symbols-outlined.md-36 {
-  font-size: 36px;
 }
 .material-symbols-outlined.md-48 {
   font-size: 80px;
+}
+#left,
+#right,
+#center {
+  fill: var(--white);
+  transition: all 100ms linear;
+}
+#center {
+  opacity: 0;
+}
+svg:hover #center {
+  opacity: 100;
+}
+svg:hover #left {
+  transform: translateX(15%);
+}
+svg:hover #right {
+  transform: translateX(-15%);
+}
+
+#heart,
+#handleft,
+#handright,
+#bolt,
+#base,
+#flames_1,
+#fill {
+  fill: var(--white);
+  transition: all 100ms linear;
+}
+svg:hover #handright {
+  transform: translateY(30%);
+  opacity: 0;
+}
+svg:hover #handleft {
+  transform: translateY(30%);
+  opacity: 0;
+}
+svg:hover #heart {
+  transform: translateY(20%);
+}
+svg:hover #bolt {
+  transform: translateY(20%);
+  fill: black;
+}
+/* #base, */
+/* #flames, */
+/* #fill { */
+/*   transform: translateY(-5%); */
+/* } */
+#flames_2{
+  opacity: 0;
+  transition: all 100ms linear;
+}
+#fill {
+  opacity: 0;
+}
+svg:hover #fill {
+  opacity: 1;
+}
+svg:hover #flames_1 {
+  transform: translateY(-100%);
+}
+svg:hover #flames_2{
+  transform:translateY(-50%);
+  opacity: 1;
+  fill: var(--white);
 }
