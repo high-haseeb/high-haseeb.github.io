@@ -7,10 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        open: "var(--font-open-sans)",
+        inter: "var(--font-inter)"
+      },
       colors: {
-        blackC: "#272829",
-        whiteC: "#FFF6E0",
-        midA: "#61677A",
+        blackC: "#000000",
+        whiteC: "#f5f5f5",
+        gold: "#e9b21a",
         midB: "#D8D9DA",
       },
       keyframes: {

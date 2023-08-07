@@ -1,8 +1,9 @@
 import Navbar from "@/components/navbar";
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Open_Sans } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const opens = Open_Sans({ subsets: ["latin"], variable: "--font-open-sans" });
 
 export const metadata = {
   title: "high-haseeb",
@@ -13,8 +14,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} no-scrollbar`}>
-        <Navbar />
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+      </head>
+      <body className={`${inter.variable} ${opens.variable} no-scrollbar`}>
+        {/* <Navbar /> */}
         {children}
       </body>
     </html>
