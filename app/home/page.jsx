@@ -1,25 +1,35 @@
 "use client";
+import React, { useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { EffectComposer } from "@react-three/postprocessing";
+import { ASCIIEffect } from "@/utils/asciiShader";
+import { OrbitControls, Environment } from "@react-three/drei";
 import { Model } from "@/components/skull";
-import { Environment, OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import React, { Suspense } from "react";
 
-function Home() {
+export default function Scene() {
+  const asciiEffect = React.useMemo(() => new ASCIIEffect(), []);
   return (
-    <div className="h-screen w-screen bg-gray-400 absolute">
-      <Canvas camera={{ position: [0, 0, -20] }}>
-        <Suspense fallback={null}>
-          <OrbitControls />
-          <gridHelper size={3} />
-          <pointLightHelper>
-            <pointLight position={[0, 0, 0]} attach={"light"}/>
-          </pointLightHelper>
-          {/* <Environment preset="park" /> */}
-          <Model position={[0, 0, 0]} />
-        </Suspense>
+    <div className="h-screen w-screen bg-black">
+      <Canvas camera={{ position: [0, 0, -30] }}>
+        <OrbitControls />
+        <Environment preset={"sunset"} />
+        <Donut/>
+        <EffectComposer>
+          <primitive object={asciiEffect} />
+        </EffectComposer>
       </Canvas>
     </div>
   );
 }
-
-export default Home;
+function Donut() {
+  const torusRef = useRef();
+  useFrame((state, delta) => {
+    torusRef.current.rotation.y += delta;
+  })
+  return (
+    <mesh ref={torusRef}>
+      <torusGeometry args={[10, 3, 13, 100]} />
+      <meshPhysicalMaterial />
+    </mesh>
+  )
+}
