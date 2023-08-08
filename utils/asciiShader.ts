@@ -119,3 +119,4 @@ export default class ASCIIEffect extends Effect {
         return texture;
     }
 }
+
