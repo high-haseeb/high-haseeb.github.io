@@ -11,34 +11,22 @@ export function Arrow() {
         <rect id="rect" x="9" y="79" width="83" height="13" />
         <g id="arrow_down">
           <g id="Vector">
-            <path
-              d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z"
-            />
+            <path d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z" />
             <path d="M30.7224 8L45.4449 27.5H16L30.7224 8Z" />
           </g>
           <g id="Vector_2">
-            <path
-              d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z"
-            />
-            <path
-              d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z"
-            />
+            <path d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z" />
+            <path d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z" />
           </g>
         </g>
         <g id="arrow_up">
           <g id="Vector">
-            <path
-              d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z"
-            />
+            <path d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z" />
             <path d="M30.7224 8L45.4449 27.5H16L30.7224 8Z" />
           </g>
           <g id="Vector_2">
-            <path
-              d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z"
-            />
-            <path
-              d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z"
-            />
+            <path d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z" />
+            <path d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z" />
           </g>
         </g>
       </g>
@@ -106,11 +94,11 @@ export function Code() {
     </svg>
   );
 }
-export function IconWrapper({ children, title }) {
+export function IconWrapper({ children, title , props}) {
   return (
-    <div className="flex flex-col justify-center ">
+    <div className={`flex flex-col justify-center ${props}`}>
       <div className="bg-blackC border-6 border-whiteC">{children}</div>
-      <h1 className="text-whiteC text-xl font-bold border-t-4 border-whiteC mt-2 ">
+      <h1 className="text-whiteC text-base font-bold border-t-4 border-whiteC mt-2 ">
         {title}
       </h1>
     </div>
@@ -150,17 +138,17 @@ export function Heart() {
     </svg>
   );
 }
-export function Title() {
+export function Title({args}) {
   return (
-    <div className="bg-blackC font-inter font-bold text-whiteC flex flex-col items-start justify-center border-t-4 border-b-4 border-gold leading-none">
-      <h4 className="font-normal text-xs tracking-tighter mt-1">
+    <div className={`w-full h-full bg-black font-bold  text-whiteC border-t-4 border-gold ${args}`}>
+      <p className="text-xs  mt-1 mr-4">
         PRODUCT DESCRIPTION
-      </h4>
-      <h1 className=" tracking-tighter  text-9xl mb-[-15px]">Haseeb </h1>
-      <h1 className=" tracking-tighter text-9xl flex">
+      </p>
+      <p className="tracking-tighter text-8xl mb-[-15px]">Haseeb </p>
+      <p className="tracking-tighter text-8xl flex border-b-4 border-gold">
         Khalid
         <span className="text-6xl justify-self-start">&#174;</span>
-      </h1>
+      </p>
     </div>
   );
 }
