@@ -1,3 +1,4 @@
+"use client"
 import { CanvasTexture, Color, NearestFilter, RepeatWrapping, Texture, Uniform } from 'three';
 import { Effect } from 'postprocessing';
 
