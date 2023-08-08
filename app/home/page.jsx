@@ -1,15 +1,14 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
 // import { ASCIIEffect } from "@/utils/asciiShader";
 import { OrbitControls, Environment } from "@react-three/drei";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
-const ASCIIEffect = dynamic(
-  () => import('@/utils/asciiShader'),
-  { ssr: false }
-)
+const ASCIIEffect = dynamic(() => import("@/utils/asciiShader"), {
+  ssr: false,
+});
 export default function Scene() {
   const asciiEffect = React.useMemo(() => new ASCIIEffect(), []);
   return (
@@ -17,7 +16,7 @@ export default function Scene() {
       <Canvas camera={{ position: [0, 0, -30] }}>
         <OrbitControls />
         <Environment preset={"sunset"} />
-        <Donut/>
+        <Donut />
         <EffectComposer>
           <primitive object={asciiEffect} />
         </EffectComposer>
@@ -30,11 +29,11 @@ function Donut() {
   useFrame((state, delta) => {
     torusRef.current.rotation.y += delta;
     torusRef.current.rotation.x += delta;
-  })
+  });
   return (
     <mesh ref={torusRef}>
       <torusGeometry args={[10, 3, 13, 100]} />
       <meshPhysicalMaterial />
     </mesh>
-  )
+  );
 }

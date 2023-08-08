@@ -51,7 +51,7 @@ export interface IASCIIEffectProps {
     invert?: boolean;
 }
 
-export class ASCIIEffect extends Effect {
+export default class ASCIIEffect extends Effect {
     constructor({
         characters = ` .:,'-^=*+?!|0#X%WM@`,
         fontSize = 54,
