@@ -96,9 +96,9 @@ export function Code() {
 }
 export function IconWrapper({ children, title , props}) {
   return (
-    <div className={`flex flex-col justify-center ${props}`}>
-      <div className="bg-blackC border-6 border-whiteC">{children}</div>
-      <h1 className="text-whiteC text-base font-bold border-t-4 border-whiteC mt-2 ">
+    <div className={` flex flex-col justify-center itmes-center w-[70px] lg:w-[90px]  ${props}`}>
+      <div className=" border-6 border-whiteC flex justify-center items-center h-[70px] lg:h-[90px]">{children}</div>
+      <h1 className="text-whiteC text-sm font-bold  border-t-4 border-whiteC mt-2 w-auto">
         {title}
       </h1>
     </div>
@@ -140,12 +140,12 @@ export function Heart() {
 }
 export function Title({args}) {
   return (
-    <div className={`w-full h-full bg-black font-bold  text-whiteC border-t-4 border-gold ${args}`}>
+    <div className={`w-full text-8xl  bg-black font-bold  text-whiteC border-t-4 border-gold ${args}`}>
       <p className="text-xs  mt-1 mr-4">
         PRODUCT DESCRIPTION
       </p>
-      <p className="tracking-tighter text-8xl mb-[-15px]">Haseeb </p>
-      <p className="tracking-tighter text-8xl flex border-b-4 border-gold">
+      <p className="tracking-tighter mb-[-15px]">Haseeb </p>
+      <p className="tracking-tighter flex border-b-4 border-gold">
         Khalid
         <span className="text-6xl justify-self-start">&#174;</span>
       </p>
