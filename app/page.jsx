@@ -24,7 +24,7 @@ export default function Home() {
               <div className=" border-whiteC mb-4">
                 <Details args={""} />
               </div>
-              {/* <FactsTable args={""} /> */}
+              <FactsTable args={""} />
             </div>
           </div>
         </div>
