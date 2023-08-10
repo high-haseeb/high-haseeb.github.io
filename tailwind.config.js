@@ -15,7 +15,7 @@ module.exports = {
         inter: "var(--font-inter)",
       },
       colors: {
-        blackC: "#000000",
+        blackC: "black",
         whiteC: "#f5f5f5",
         gold: "#e9b21a",
         midB: "#D8D9DA",
