@@ -110,10 +110,6 @@ svg:hover #arrow_up {
 svg:hover #arrow_down {
   transform: translateY(-80%);
 }
-/* #texture { */
-/*   background-image: url(/pattern.png); */
-/*   background-repeat: repeat; */
-/* } */
 #texture {
   position: absolute;
   top: 0;
@@ -124,5 +120,7 @@ svg:hover #arrow_down {
   background-repeat: repeat;
   background-size: cover;
   pointer-events: none;
-  background-image:url('../public/texture.png');;
+  -webkit-filter: invert(100%); /* Safari/Chrome */
+  filter: invert(100%);
+  /* background-image: url("../public/texture.png"); */
 }

@@ -1,0 +1,194 @@
+"use client";
+import {
+  KeyboardControls,
+  useKeyboardControls,
+  Environment,
+  OrbitControls,
+} from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Debug, Physics, RigidBody, useRapier } from "@react-three/rapier";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
+import * as THREE from "three";
+
+function Page() {
+  return (
+    <div className="w-screen h-screen">
+      <KeyboardControls
+        map={[
+          { name: "forward", keys: ["KeyW"] },
+          { name: "backward", keys: ["KeyS"] },
+          { name: "leftward", keys: ["KeyA"] },
+          { name: "rightward", keys: ["KeyD"] },
+          { name: "jump", keys: ["Space"] },
+        ]}
+      >
+        <Canvas>
+          <Physics
+            gravity={[0, -60, 0]}
+            // timeStep={1 / 60}
+            //
+          >
+            <Debug />
+
+
+            {/* 🧊 cube */}
+            <RigidBody position-y={1}>
+              <mesh>
+                <boxGeometry args={[2, 2, 2]} />
+                <meshStandardMaterial color="blue" />
+              </mesh>
+            </RigidBody>
+
+            {/* 🏀 ball */}
+            {/* <Ball /> */}
+
+            {/* Ground */}
+            <RigidBody
+              type="fixed"
+              position-y={-0.1 / 2}
+              rotation={[-Math.PI / 2, 0, 0]}
+            >
+              <mesh>
+                <boxGeometry args={[100, 100, 0.1]} />
+                <meshStandardMaterial color="gray" transparent opacity={0.8} />
+              </mesh>
+            </RigidBody>
+          </Physics>
+        </Canvas>
+      </KeyboardControls>
+    </div>
+  );
+}
+//
+export default Page;
+
+const Ball = () => {
+  const { camera } = useThree();
+
+  const bodyRef = useRef(null);
+
+  const [subscribeKeys, getKeys] = useKeyboardControls(); // see: https://github.com/pmndrs/drei#keyboardcontrols
+  const { rapier, world } = useRapier();
+
+  const gui = useControls({
+    Ball: folder(
+      {
+        radius: { value: 1, render: () => false },
+        body: folder({
+          restitution: 0.2,
+          friction: 1,
+          linearDamping: 0.5,
+          angularDamping: 0.5,
+        }),
+        impulseStrength: 50,
+        torqueStrength: 30,
+        jumpStrength: 90,
+      },
+      { collapsed: true },
+    ),
+  });
+
+  //
+  // 🎮 wasd
+  //
+
+  useFrame((state, delta) => {
+    const { forward, backward, leftward, rightward } = getKeys();
+
+    const impulse = new THREE.Vector3(0, 0, 0);
+    const torque = new THREE.Vector3(0, 0, 0);
+
+    const impulseStrength = gui.impulseStrength * delta;
+    const torqueStrength = gui.torqueStrength * delta;
+
+    if (forward) {
+      impulse.z = -1;
+      torque.x = -1;
+    }
+    if (backward) {
+      impulse.z = 1;
+      torque.x = 1;
+    }
+    if (rightward) {
+      impulse.x = 1;
+      torque.z = -1;
+    }
+    if (leftward) {
+      impulse.x = -1;
+      torque.z = 1;
+    }
+
+    const { current: body } = bodyRef;
+
+    if (body && impulse.length() > 0) {
+      impulse.applyMatrix4(camera.matrixWorld).sub(camera.position);
+      impulse.setY(0);
+      impulse.normalize().setLength(impulseStrength);
+      // console.log("impulse", impulse);
+
+      body.applyImpulse(impulse);
+    }
+
+    if (body && torque.length() > 0) {
+      torque.applyMatrix4(camera.matrixWorld).sub(camera.position);
+      torque.setY(0);
+      torque.normalize().setLength(torqueStrength);
+      // console.log("torque", torque);
+
+      body.applyTorqueImpulse(torque);
+    }
+  });
+
+  //
+  // 🦘 jump
+  //
+
+  const jump = useCallback(() => {
+    // console.log("jump");
+
+    const { current: body } = bodyRef;
+
+    if (body) {
+      const origin = body.translation();
+
+      origin.y -= gui.radius + 0.05;
+      const direction = { x: 0, y: -1, z: 0 };
+      const ray = new rapier.Ray(origin, direction);
+      const hit = world.raw().castRay(ray, 10, true);
+
+      if (hit && hit.toi < 0.15) {
+        body.applyImpulse({ x: 0, y: gui.jumpStrength, z: 0 });
+      }
+    }
+  }, [gui.jumpStrength, gui.radius, rapier.Ray, world]);
+
+  useEffect(() => {
+    const unsubscribeJump = subscribeKeys(
+      (state) => state.jump,
+      (value) => {
+        if (value) jump();
+      },
+    );
+
+    return () => {
+      unsubscribeJump();
+    };
+  }, [subscribeKeys, jump]);
+
+  return (
+    <RigidBody
+      position={[0, gui.radius, 5]} // ⚠️ `position` props on <RigidBody> (not on <mesh>)
+      ref={bodyRef}
+      colliders="ball"
+      restitution={gui.restitution}
+      friction={gui.friction}
+      linearDamping={gui.linearDamping}
+      angularDamping={gui.angularDamping}
+    >
+      <mesh castShadow>
+        <icosahedronGeometry args={[gui.radius, 1]} />
+        <meshStandardMaterial color="red" flatShading />
+      </mesh>
+    </RigidBody>
+  );
+}

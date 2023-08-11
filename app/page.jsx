@@ -16,7 +16,7 @@ export default function Home() {
                 </Link>
                 <IconWrapper children={Arrow()} title={"The only way is up"} />
                 <IconWrapper children={Heart()} title={"Fragile Heart"} />
-                <IconWrapper children={Tea()} title={"Drinks only Tea"} />
+                <Link href='./snake'><IconWrapper children={Tea()} title={"Drinks only Tea"} /></Link>
               </div>
               <Title args={"md:text-9xl"} />
             </div>
@@ -24,7 +24,7 @@ export default function Home() {
               <div className=" border-whiteC mb-4">
                 <Details args={""} />
               </div>
-              <FactsTable args={""} />
+              {/* <FactsTable args={""} /> */}
             </div>
           </div>
         </div>
