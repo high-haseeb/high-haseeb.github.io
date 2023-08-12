@@ -1,105 +1,72 @@
 "use client";
-import {
-  KeyboardControls,
-  useKeyboardControls,
-  Environment,
-  OrbitControls,
-} from "@react-three/drei";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { FirstPersonControls, PointerLockControls, Sphere } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Debug, Physics, RigidBody, useRapier } from "@react-three/rapier";
-import { useState, useMemo, useRef, useCallback, useEffect } from "react";
+import {
+  OrbitControls,
+  useHelper,
+  Html,
+  useKeyboardControls,
+  KeyboardControls,
+  PerspectiveCamera,
+} from "@react-three/drei";
+import { DirectionalLightHelper } from "three";
+import { RigidBody, Physics } from "@react-three/rapier";
 import * as THREE from "three";
 
-function Page() {
+export default function Page() {
+  const map = useMemo(() => {
+    return [
+      { name: "forward", keys: ["KeyW"] },
+      { name: "backward", keys: ["KeyS"] },
+      { name: "leftward", keys: ["KeyA"] },
+      { name: "rightward", keys: ["KeyD"] },
+      { name: "jump", keys: ["Space"] },
+    ];
+  }, []);
   return (
-    <div className="w-screen h-screen">
-      <KeyboardControls
-        map={[
-          { name: "forward", keys: ["KeyW"] },
-          { name: "backward", keys: ["KeyS"] },
-          { name: "leftward", keys: ["KeyA"] },
-          { name: "rightward", keys: ["KeyD"] },
-          { name: "jump", keys: ["Space"] },
-        ]}
-      >
-        <Canvas>
-          <Physics
-            gravity={[0, -60, 0]}
-            // timeStep={1 / 60}
-            //
-          >
-            <Debug />
-
-
-            {/* 🧊 cube */}
-            <RigidBody position-y={1}>
-              <mesh>
-                <boxGeometry args={[2, 2, 2]} />
-                <meshStandardMaterial color="blue" />
-              </mesh>
-            </RigidBody>
-
-            {/* 🏀 ball */}
-            {/* <Ball /> */}
-
-            {/* Ground */}
-            <RigidBody
-              type="fixed"
-              position-y={-0.1 / 2}
-              rotation={[-Math.PI / 2, 0, 0]}
-            >
-              <mesh>
-                <boxGeometry args={[100, 100, 0.1]} />
-                <meshStandardMaterial color="gray" transparent opacity={0.8} />
-              </mesh>
-            </RigidBody>
+    <div className="w-screen h-screen bg-gray-500">
+      <Canvas camera={{ position: [0, 0, 50] }}>
+        <KeyboardControls map={map}>
+          <Physics gravity={[0, -60, 0]}>
+            <OrbitControls />
+            {/* <PointerLockControls /> */}
+            <Lighting />
+            <Ball />
+            <mesh >
+              <sphereGeometry args={[5, 16, 16]} position={[0, 10, 0]}/>
+              <meshToonMaterial color='green'/>
+            </mesh>
+            <Floor />
           </Physics>
-        </Canvas>
-      </KeyboardControls>
+        </KeyboardControls>
+      </Canvas>
     </div>
   );
 }
-//
-export default Page;
 
 const Ball = () => {
-  const { camera } = useThree();
+  const [color, toggleColor] = useState(true);
+  const initialPos = [0, 10, 0];
+  const [pos, setPosition] = useState(initialPos);
+  const [sub, getKeys] = useKeyboardControls();
+  const [onFloor, setOnFloor] = useState(true);
+  const ballRef = useRef();
+  const impulseStrength = 400;
+  const impulse = new THREE.Vector3(0, 0, 0);
+  const torque = new THREE.Vector3(0, 0, 0);
 
-  const bodyRef = useRef(null);
 
-  const [subscribeKeys, getKeys] = useKeyboardControls(); // see: https://github.com/pmndrs/drei#keyboardcontrols
-  const { rapier, world } = useRapier();
+  var ballPos = new THREE.Vector3(0, 0, 0);
+  useFrame((state) => {
 
-  const gui = useControls({
-    Ball: folder(
-      {
-        radius: { value: 1, render: () => false },
-        body: folder({
-          restitution: 0.2,
-          friction: 1,
-          linearDamping: 0.5,
-          angularDamping: 0.5,
-        }),
-        impulseStrength: 50,
-        torqueStrength: 30,
-        jumpStrength: 90,
-      },
-      { collapsed: true },
-    ),
-  });
+    ballPos = ballRef.current.translation()
+    state.camera.position.set(ballPos.x, ballPos.y, ballPos.z + 50)
 
-  //
-  // 🎮 wasd
-  //
 
-  useFrame((state, delta) => {
-    const { forward, backward, leftward, rightward } = getKeys();
-
-    const impulse = new THREE.Vector3(0, 0, 0);
-    const torque = new THREE.Vector3(0, 0, 0);
-
-    const impulseStrength = gui.impulseStrength * delta;
-    const torqueStrength = gui.torqueStrength * delta;
+    const { forward, backward, leftward, rightward, jump } = getKeys();
+    impulse.x = impulse.y = impulse.z = 0;
+    torque.x = torque.y = torque.z = 0;
 
     if (forward) {
       impulse.z = -1;
@@ -117,78 +84,95 @@ const Ball = () => {
       impulse.x = -1;
       torque.z = 1;
     }
-
-    const { current: body } = bodyRef;
-
-    if (body && impulse.length() > 0) {
-      impulse.applyMatrix4(camera.matrixWorld).sub(camera.position);
-      impulse.setY(0);
-      impulse.normalize().setLength(impulseStrength);
-      // console.log("impulse", impulse);
-
-      body.applyImpulse(impulse);
+    if (jump && onFloor) {
+      impulse.y = 1;
+      ballRef.current.applyImpulse(
+        impulse.setLength(impulseStrength * 20),
+        true,
+      );
+      setOnFloor(false);
     }
-
-    if (body && torque.length() > 0) {
-      torque.applyMatrix4(camera.matrixWorld).sub(camera.position);
-      torque.setY(0);
-      torque.normalize().setLength(torqueStrength);
-      // console.log("torque", torque);
-
-      body.applyTorqueImpulse(torque);
-    }
+    push();
   });
-
-  //
-  // 🦘 jump
-  //
-
-  const jump = useCallback(() => {
-    // console.log("jump");
-
-    const { current: body } = bodyRef;
-
-    if (body) {
-      const origin = body.translation();
-
-      origin.y -= gui.radius + 0.05;
-      const direction = { x: 0, y: -1, z: 0 };
-      const ray = new rapier.Ray(origin, direction);
-      const hit = world.raw().castRay(ray, 10, true);
-
-      if (hit && hit.toi < 0.15) {
-        body.applyImpulse({ x: 0, y: gui.jumpStrength, z: 0 });
-      }
+  const push = () => {
+    if (ballRef.current) {
+      impulse.normalize().setLength(impulseStrength);
+      torque.normalize().setLength(impulseStrength);
+      ballRef.current.applyImpulse(impulse, true);
+      ballRef.current.applyTorqueImpulse(torque, true);
     }
-  }, [gui.jumpStrength, gui.radius, rapier.Ray, world]);
-
-  useEffect(() => {
-    const unsubscribeJump = subscribeKeys(
-      (state) => state.jump,
-      (value) => {
-        if (value) jump();
-      },
-    );
-
-    return () => {
-      unsubscribeJump();
-    };
-  }, [subscribeKeys, jump]);
+  };
+  const handleCollision = ({ manifold, target, other }) => {
+    setOnFloor(true);
+    if (other.rigidBodyObject) {
+      console.log(
+        target.rigidBodyObject.name,
+        "collided with",
+        other.rigidBodyObject.name,
+      );
+    }
+  };
 
   return (
+    <>
+      <Html>
+        <div className="">
+          <button
+            onClick={() => {
+              ballRef.current.setTranslation({ x: 0, y: 10, z: 0 }, true);
+            }}
+            className="bg-teal-500 "
+          >
+            reset
+          </button>
+        </div>
+      </Html>
+
+      <RigidBody
+        name="gota"
+        colliders="cuboid"
+        position={pos}
+        ref={ballRef}
+        onCollisionEnter={handleCollision}
+      >
+        <mesh onClick={push}>
+          <boxGeometry args={[10, 5, 5]} />
+          <meshToonMaterial color={color ? "lime" : "hotpink"} />
+        </mesh>
+      </RigidBody>
+
+    </>
+  );
+};
+const Floor = () => {
+  return (
     <RigidBody
-      position={[0, gui.radius, 5]} // ⚠️ `position` props on <RigidBody> (not on <mesh>)
-      ref={bodyRef}
-      colliders="ball"
-      restitution={gui.restitution}
-      friction={gui.friction}
-      linearDamping={gui.linearDamping}
-      angularDamping={gui.angularDamping}
+      name="fucking floor"
+      type="fixed"
+      position-y={-0.1}
+      friction={0}
+      rotation={[Math.PI / 2, 0, 0]}
     >
-      <mesh castShadow>
-        <icosahedronGeometry args={[gui.radius, 1]} />
-        <meshStandardMaterial color="red" flatShading />
+      <mesh>
+        <boxGeometry args={[1000, 1000, 0.1]} />
+        <meshToonMaterial color="gold" />
       </mesh>
     </RigidBody>
   );
-}
+};
+const Lighting = () => {
+  const dirLight = useRef(null);
+  // useHelper(dirLight, DirectionalLightHelper, 1, 'red');
+  return (
+    <>
+      <directionalLight
+        color="white"
+        intensity={0.8}
+        ref={dirLight}
+        position={[0, 5, 0]}
+        castShadow
+      />
+      <ambientLight color="white" intensity={0.4} />
+    </>
+  );
+};
