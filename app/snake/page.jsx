@@ -1,7 +1,7 @@
 "use client";
 import React, { useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
-import { KeyboardControls, Stats, OrbitControls} from "@react-three/drei";
+import { KeyboardControls, Stats } from "@react-three/drei";
 
 import { Physics } from "@react-three/rapier";
 import useRefs from "react-use-refs";

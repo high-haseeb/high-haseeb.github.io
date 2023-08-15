@@ -1,6 +1,6 @@
-import Navbar from "@/components/navbar";
 import "./globals.css";
 import { Inter, Open_Sans } from "next/font/google";
+import { ThemeProvider } from "@/components/themeProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const opens = Open_Sans({ subsets: ["latin"], variable: "--font-open-sans" });
@@ -15,7 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} no-scrollbar m-0 p-0`}>
-        {children}
+        <ThemeProvider attribute="class" defultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

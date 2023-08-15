@@ -1,3 +1,19 @@
+export function IconWrapper({ children, title, props }) {
+  // const animationProps = "transition ease-linear duration-[2000]"
+  return (
+    <div
+      className={`flex flex-col justify-center itmes-center w-[70px] ${props}`}
+    >
+      <div className="border-4 dark:border-whiteC border-blackC flex justify-center items-center h-[70px] transition-all">
+        {children}
+      </div>
+      <h1 className="text-sm font-bold border-t-4 dark:border-whiteC border-blackC mt-2 w-auto">
+        {title}
+      </h1>
+    </div>
+  );
+}
+
 export function Arrow() {
   return (
     <svg
@@ -7,26 +23,28 @@ export function Arrow() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="code" clip-path="url(#clip0_6_2)">
-        <rect id="rect" x="9" y="79" width="83" height="13" />
-        <g id="arrow_down">
-          <g id="Vector">
-            <path d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z" />
-            <path d="M30.7224 8L45.4449 27.5H16L30.7224 8Z" />
+      <g className="fill-blackC dark:fill-whiteC">
+        <g id="code" clip-path="url(#clip0_6_2)">
+          <rect id="rect" x="9" y="79" width="83" height="13" />
+          <g id="arrow_down">
+            <g id="Vector">
+              <path d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z" />
+              <path d="M30.7224 8L45.4449 27.5H16L30.7224 8Z" />
+            </g>
+            <g id="Vector_2">
+              <path d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z" />
+              <path d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z" />
+            </g>
           </g>
-          <g id="Vector_2">
-            <path d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z" />
-            <path d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z" />
-          </g>
-        </g>
-        <g id="arrow_up">
-          <g id="Vector">
-            <path d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z" />
-            <path d="M30.7224 8L45.4449 27.5H16L30.7224 8Z" />
-          </g>
-          <g id="Vector_2">
-            <path d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z" />
-            <path d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z" />
+          <g id="arrow_up">
+            <g id="Vector">
+              <path d="M37.7224 27L37.7224 74H24.7224L24.7224 27H37.7224Z" />
+              <path d="M30.7224 8L45.4449 27.5H16L30.7224 8Z" />
+            </g>
+            <g id="Vector_2">
+              <path d="M76.4449 27L76.4449 74H63.4449L63.4449 27H76.4449Z" />
+              <path d="M69.4449 8L84.1673 27.5H54.7224L69.4449 8Z" />
+            </g>
           </g>
         </g>
       </g>
@@ -46,8 +64,9 @@ export function Tea() {
       viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="transition-all"
     >
-      <g id="code">
+      <g id="code" className="fill-blackC dark:fill-whiteC">
         <path
           id="base"
           d="M19.1926 50.8H81.7019C83.0807 50.8 84 51.76 84 53.2C84 60.4 82.6211 67.6 79.8634 73.84C77.1056 80.08 73.4286 84.88 68.8323 88.72C68.3727 89.2 67.913 89.2 67.4534 89.2H77.1056C78.4845 89.2 79.4037 90.16 79.4037 91.6C79.4037 93.04 78.4845 94 77.1056 94H31.1429C29.764 94 28.8447 93.04 28.8447 91.6C28.8447 90.16 29.764 89.2 31.1429 89.2H40.795C40.3354 89.2 39.8758 89.2 39.4161 88.72C35.2795 85.36 31.6025 81.04 28.8447 75.28H28.3851C21.0311 75.28 16.8944 72.4 14.1367 70.48C11.3789 67.6 9.54037 64.24 9.54037 60.88C9.54037 55.12 14.1367 50.8 19.1926 50.8ZM31.6025 70H76.1863C78.0248 65.68 78.9441 60.88 78.9441 55.6H28.3851C28.8447 60.88 29.764 65.68 31.6025 70ZM17.8137 66.64C19.1925 68.08 21.9503 69.52 26.5466 70C25.1677 65.68 24.2484 60.88 23.7888 56.08H19.1926C16.8944 56.08 15.0559 58 15.0559 60.4C15.0559 62.32 15.5155 64.72 17.8137 66.64Z"
@@ -58,7 +77,7 @@ export function Tea() {
           <rect id="Rectangle 2" x="50" y="10" width="6" height="35" />
           <rect id="Rectangle 3" x="62" y="27" width="6" height="18" />
         </g>
-        <g id="flames_2">
+        <g id="flames_2" className="">
           <rect id="Rectangle 1_2" x="37" y="69" width="6" height="23" />
           <rect id="Rectangle 2_2" x="50" y="57" width="6" height="35" />
           <rect id="Rectangle 3_2" x="62" y="74" width="6" height="18" />
@@ -76,32 +95,24 @@ export function Code() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="code">
+      <g id="code" >
         <rect width="100" height="100" />
-        <path
-          id="right"
-          d="M13.3906 57.2997V49.7997L43.3906 36.5895V45.2188L22.8509 53.4645L23.1278 53.017V54.0824L22.8509 53.6349L43.3906 61.8807V70.5099L13.3906 57.2997Z"
-        />
-        <path
-          id="left"
-          d="M84.3906 57.2997L54.3906 70.5099V61.8807L74.9304 53.6349L74.6534 54.0824V53.017L74.9304 53.4645L54.3906 45.2188V36.5895L84.3906 49.7997V57.2997Z"
-        />
-        <path
-          id="center"
-          d="M60.6278 25.3182L46.5653 77.5625H38.7457L52.8082 25.3182H60.6278Z"
-        />
+        <g className="fill-blackC dark:fill-whiteC">
+          <path
+            id="right"
+            d="M13.3906 57.2997V49.7997L43.3906 36.5895V45.2188L22.8509 53.4645L23.1278 53.017V54.0824L22.8509 53.6349L43.3906 61.8807V70.5099L13.3906 57.2997Z"
+          />
+          <path
+            id="left"
+            d="M84.3906 57.2997L54.3906 70.5099V61.8807L74.9304 53.6349L74.6534 54.0824V53.017L74.9304 53.4645L54.3906 45.2188V36.5895L84.3906 49.7997V57.2997Z"
+          />
+          <path
+            id="center"
+            d="M60.6278 25.3182L46.5653 77.5625H38.7457L52.8082 25.3182H60.6278Z"
+          />
+        </g>
       </g>
     </svg>
-  );
-}
-export function IconWrapper({ children, title , props}) {
-  return (
-    <div className={` flex flex-col justify-center itmes-center w-[70px]   ${props}`}>
-      <div className=" border-4 border-whiteC flex justify-center items-center h-[70px] ">{children}</div>
-      <h1 className="text-whiteC text-sm font-bold  border-t-4 border-whiteC mt-2 w-auto">
-        {title}
-      </h1>
-    </div>
   );
 }
 export function Heart() {
@@ -113,7 +124,7 @@ export function Heart() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="code">
+      <g id="code" className="fill-blackC dark:fill-whiteC">
         <path
           id="heart"
           d="M34.1696 6.00166C20.5779 5.78288 18 27.2657 18 27.2657C18 27.2657 18.0201 37.6194 49.0116 58.343V59C49.1794 58.8891 49.334 58.7836 49.5 58.6731C49.6663 58.7836 49.8205 58.8888 49.9884 59V58.343C80.98 37.619 81 27.2657 81 27.2657C81 27.2657 76.6537 -8.93664 49.5 13.1484C43.2609 8.07394 38.2242 6.0669 34.1696 6.00166Z"
@@ -121,6 +132,7 @@ export function Heart() {
         <path
           id="bolt"
           d="M31.1739 6L33.5573 10.3173H26L38.7546 35L33.0849 13.7808H41L36.2355 6H31.1739Z"
+          className="fill-whiteC dark:fill-blackC"
         />
         <g id="handright">
           <path
@@ -138,14 +150,14 @@ export function Heart() {
     </svg>
   );
 }
-export function Title({args}) {
+export function Title({ args }) {
   return (
-    <div className={`w-full text-8xl  font-bold  text-whiteC border-t-4 border-whiteC ${args}`}>
-      <p className="text-xs  mt-1 pl-1 mb-[-4px] ">
-        PRODUCT DESCRIPTION
-      </p>
+    <div
+      className={`w-full text-8xl  font-bold  border-t-4 dark:border-whiteC border-blackC ${args}`}
+    >
+      <p className="text-xs  mt-1 pl-1 mb-[-4px] ">PRODUCT DESCRIPTION</p>
       <p className="tracking-tighter mb-[-15px] ">Haseeb </p>
-      <p className="tracking-tighter flex border-b-4 border-whiteC">
+      <p className="tracking-tighter flex border-b-4 dark:border-whiteC border-blackC">
         Khalid
         <span className="text-6xl justify-self-start">&#174;</span>
       </p>
