@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import * as drei from "@react-three/drei";
+import * as drei from '@react-three/drei'
+import { useFrame, useThree } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import * as THREE from "three";
 
-export const Ball = () => {
+export const Ball = ({name}) => {
   const initialPos = new THREE.Vector3(0, 10, 0);
   const [_sub, getKeys] = drei.useKeyboardControls();
   const [onFloor, setOnFloor] = useState(true);
@@ -13,10 +14,6 @@ export const Ball = () => {
 
   const impulse = new THREE.Vector3(0, 0, 0);
   const torque = new THREE.Vector3(0, 0, 0);
-
-  var lookAtVec = new THREE.Vector3(0, 0, 0);
-  var cameraRotVec = new THREE.Vector3(0, 0, 0);
-  var cameraPosVec = new THREE.Vector3(0, 0, 0);
 
   // gets the key pressed and sets impulse and torque dir
   const userInput = () => {
@@ -50,15 +47,34 @@ export const Ball = () => {
         break;
     }
   };
-  const CAMERA_OFFSET = 20;
-  var lookAtVec = new THREE.Vector3();
-  var cameraVec = new THREE.Vector3(0, 0, 0);
 
-  const ref = useRef();
-  // useFrame((state, _delta) => {
-  //   userInput();
-  //   push();
-  // });
+  const meshRef = useRef(null);
+  const { camera } = useThree();
+  const frustum = new THREE.Frustum();
+  const matrix = new THREE.Matrix4().multiplyMatrices(
+    camera.projectionMatrix,
+    camera.matrixWorldInverse
+  );
+  frustum.setFromProjectionMatrix(matrix);
+ 
+
+  var meshPosition = new THREE.Vector3();
+  var rigidPosition = new THREE.Vector3();
+  useFrame((state, _delta) => {
+    rigidPosition = ballRef.current.translation()
+    meshPosition.x = rigidPosition.x
+    meshPosition.y = rigidPosition.y
+    meshPosition.z = rigidPosition.z
+    
+
+    if (ballRef.current) {
+      if (!frustum.containsPoint(meshPosition)) {
+        console.log("Out of view");
+      }
+    }
+    userInput();
+    push();
+  });
 
   const push = () => {
     // apply impulse and reset imulseDir vec
@@ -76,32 +92,33 @@ export const Ball = () => {
 
   const handleCollision = ({ _manifold, target, other }) => {
     setOnFloor(true);
-    if (other.rigidBodyObject) {
-      console.log(
-        target.rigidBodyObject.name,
-        "collided with",
-        other.rigidBodyObject.name
-      );
-    }
+    // if (other.rigidBodyObject) {
+      // console.log(
+        // target.rigidBodyObject.name,
+        // "collided with",
+        // other.rigidBodyObject.name
+      // );
+    // }
   };
 
   const reset = () => {
     ballRef.current.setTranslation(initialPos, true); // reset translation
     ballRef.current.setLinvel({ x: 0, y: 0, z: 0 }, true); // reset linear velocity
+    ballRef.current.setAngvel({ x: 0, y: 0, z: 0 }, true); // reset linear velocity
   };
   return (
     <>
       <RigidBody
-        name="gota"
+        name={name}
         colliders="cuboid"
         restitution={0.1}
         position={initialPos}
         onCollisionEnter={handleCollision}
         ref={ballRef}
       >
-        <mesh onClick={push} ref={ref}>
+        <mesh onClick={push} castShadow={true} ref={meshRef}>
           <boxGeometry args={[10, 5, 5]} />
-          <meshToonMaterial color="hotpink" />
+          <meshStandardMaterial color="hotpink" />
         </mesh>
       </RigidBody>
     </>

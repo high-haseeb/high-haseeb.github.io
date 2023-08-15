@@ -1,27 +1,28 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { useHelper, OrthographicCamera } from "@react-three/drei";
-import * as THREE from 'three'
+import * as THREE from "three";
+import { useThree } from "@react-three/fiber";
 
 export default function IsometricCamera({ mainCamera }) {
-  const cameraRef = useRef(null);
-  const { current: camera } = cameraRef;
-
-  useEffect(() => {
-    console.log("isometric camera mounted");
-    camera.position.set(20, 20, 20);
-    camera.rotation.order = "YXZ";
-    camera.rotation.y = -Math.PI / 4;
-    camera.rotation.x = Math.atan(-1 / Math.sqrt(2));
-  }, []);
-
+  const { cameraRef } = useRef(null);
+  const d = 100;
+  useThree(({camera}) => {
+    camera.position.set(d, d, d);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+  })
   useHelper(cameraRef, THREE.CameraHelper, "red");
   const aspect = window.innerWidth / window.innerHeight;
-  const d = 20;
-
   return (
     <OrthographicCamera
-      makeDefault={mainCamera ? true : false}
-      args={[-d * aspect, d * aspect, d, -d, 1, 1000]}
+      makeDefault={mainCamera}
+      zoom={5}
+      top={d}
+      bottom={-d}
+      left={-d * aspect}
+      right={d * aspect}
+      near={1}
+      far={2000}
+      position={[0, 0, 200]}
       ref={cameraRef}
     />
   );
