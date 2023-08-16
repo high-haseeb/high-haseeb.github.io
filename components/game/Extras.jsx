@@ -14,9 +14,9 @@ export const Floor = ({ floorSize }) => {
     <RigidBody
       name="fucking floor"
       type="fixed"
-      position={[0, -5, 0]}
-      friction={2}
-      restitution={.2}
+      position={[0, -5 , 0]}
+      friction={1}
+      restitution={0}
       rotation={[Math.PI / 2, 0, 0]}
       onCollisionEnter={destroyBall}
     >

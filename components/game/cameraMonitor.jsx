@@ -3,7 +3,6 @@ import { OrbitControls, View} from "@react-three/drei";
 import { Floor, Lighting } from "./Extras";
 import IsometricCamera from "./IsometricCamera";
 import { useThree } from "@react-three/fiber";
-import { Ball } from "./Ball";
 
 export default function CameraMonitor({ viewRef }) {
 
@@ -15,7 +14,6 @@ export default function CameraMonitor({ viewRef }) {
       <OrbitControls makeDefault/>
       <axesHelper args={[10]} />
       <IsometricCamera mainCamera={false} />
-      <Ball/>
       <color attach="background" args={["brown"]} />
       <Floor />
       <Lighting />
