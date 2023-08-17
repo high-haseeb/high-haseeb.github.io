@@ -9,17 +9,22 @@ import React, {
   useState,
 } from "react";
 import * as THREE from "three";
+import { VectorRepresentation } from "@/helpers/vectorVisualizer";
+
+// const STEER_STRENGTH = 40;
+// steering should only change the direction of the movement vector
+// or rotate it along the y axis
+
+const MOVE_STRENGTH = 500;
 
 export const Player = forwardRef((props, ref) => {
   const upVec = new THREE.Vector3(0, 0, 1);
   useImperativeHandle(ref, () => ({
     moveLeftward() {
-      torqueDir.setY(1)
-      move();
+      steer();
     },
     moveRightward() {
-      torqueDir.setY(-1);
-      move();
+      steer();
     },
     moveForward() {
       vehicleRef.current.getWorldDirection(upVec);
@@ -37,31 +42,35 @@ export const Player = forwardRef((props, ref) => {
       playerRef.current.setAngvel(zeroVec, true);
       playerRef.current.setTranslation(zeroVec, true);
     },
+    log() {
+      impulseDir.setZ(1);
+      applyLocalImpulse();
+    },
   }));
 
-  const jump = () => {
-    // playerRef.current.applyImpulse({x:0, y:3000, z:0}, true);
-    // setOnFloor(false);
+  const steer = () => {
+    // impulseDir => original vector
+    const angle = Math.PI / 40; // angle => 45 degrees
+    const rotationMatrix = new THREE.Matrix4();
+    rotationMatrix.makeRotationY(angle);
+    // upVec.applyMatrix4(rotationMatrix)
+    console.log(upVec)
   };
+
   const move = () => {
+    console.log(impulseDir)
     playerRef.current.applyImpulse(
-      impulseDir.multiplyScalar(impulseStrength),
-      true
+      impulseDir.multiplyScalar(MOVE_STRENGTH),
+      true,
     );
-    playerRef.current.applyTorqueImpulse(
-      torqueDir.multiplyScalar(torqueStrength),
-      true
-    );
-    impulseDir.copy(zeroVec);
-    torqueDir.copy(zeroVec);
+    impulseDir.copy(zeroVec); // reset
   };
 
   const playerRef = useRef(null);
   const vehicleRef = useRef(null);
   const impulseDir = new THREE.Vector3(0, 0, 0);
+  const frontPoint = new THREE.Vector3(0, 0, 2);
   const torqueDir = new THREE.Vector3(0, 0, 0);
-  const torqueStrength = 100;
-  const impulseStrength = 500;
   const zeroVec = new THREE.Vector3(0, 0, 0);
   const [onFloor, setOnFloor] = useState(true);
   const colliderRef = useRef();
@@ -71,15 +80,13 @@ export const Player = forwardRef((props, ref) => {
     console.log(other.rigidBodyObject.name);
     setOnFloor(true);
   };
-  useEffect(async () => {
-  }, []);
 
   return (
     <RigidBody
       name="player"
       restitution={0}
-      friction={1}
-      density={0.05}
+      friction={9}
+      density={0.09}
       scale={3}
       ref={playerRef}
       onCollisionEnter={handleCollision}

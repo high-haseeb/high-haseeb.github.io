@@ -14,7 +14,7 @@ function MainView({ viewRef }) {
     if (rightward) playerRef.current.moveRightward();
     if (forward) playerRef.current.moveForward();
     if (backward) playerRef.current.moveBackward();
-    // if (jump) playerRef.current.moveForward();
+    if (jump) playerRef.current.log();
 
     if (reset) {
       playerRef.current.reset();

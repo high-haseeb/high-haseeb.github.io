@@ -115,5 +115,6 @@ svg:hover #arrow_down {
   background-repeat: repeat;
   background-size: cover;
   pointer-events: none;
+  background-position: center;
   background-image: url("../public/texture.png");
 }

@@ -15,7 +15,7 @@ export const Floor = ({ floorSize }) => {
       name="fucking floor"
       type="fixed"
       position={[0, -5 , 0]}
-      friction={1}
+      friction={2}
       restitution={0}
       rotation={[Math.PI / 2, 0, 0]}
       onCollisionEnter={destroyBall}
