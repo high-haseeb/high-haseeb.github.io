@@ -1,4 +1,3 @@
-"use client"
 import React from "react";
 import prisma from "@/lib/prisma";
 import UserForm from "@/components/UserForm";
