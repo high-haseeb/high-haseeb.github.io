@@ -7,6 +7,7 @@ export default function UserForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+   
   const onSubmit = async (data) => {
     const body = { name: data.name, email: data.email };
     try {
@@ -15,7 +16,9 @@ export default function UserForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      console.log('it worked')
     } catch (error) {
+      "it didn't work"
       console.log(error);
     }
   };
