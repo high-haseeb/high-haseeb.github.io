@@ -24,8 +24,8 @@ export default function UserForm() {
     <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-end text-2xl'>
       <input placeholder="name" {...register("name", { required: true })} className=" px-4 mb-4"/>
       <input placeholder='email'{...register("email", { required: true })} className="px-4 mb-4"/>
-      {errors.name && <span>This field is required</span>}
-      {errors.email && <span>This field is required</span>}
+      {errors.name && <span>Please enter your name</span>}
+      {errors.email && <span>Please enter your email</span>}
       <input type="submit" />
     </form>
   );
