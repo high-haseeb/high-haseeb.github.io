@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useForm } from "react-hook-form";
 
 export default function UserForm() {
@@ -25,7 +25,7 @@ export default function UserForm() {
       <input placeholder="name" {...register("name", { required: true })} className=" px-4 mb-4"/>
       <input placeholder='email'{...register("email", { required: true })} className="px-4 mb-4"/>
       {errors.name && <span>Please enter your name</span>}
-      {errors.email && <span>Please enter your email</span>}
+      {errors.email && <span>This field is required</span>}
       <input type="submit" />
     </form>
   );

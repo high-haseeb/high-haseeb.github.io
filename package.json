@@ -6,7 +6,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d .next",
-    "dev": "prisma generate && next dev",
+    "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "prisma generate && next start",
     "lint": "next lint"
@@ -32,8 +32,6 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "eslint": "8.47.0",
-    "eslint-config-next": "13.4.19",
     "gh-pages": "^5.0.0",
     "prisma": "^5.1.1"
   }
