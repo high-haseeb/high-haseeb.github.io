@@ -2,7 +2,7 @@ import ASCIIEffect from "@/utils/asciiShader";
 import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
-import { Center } from "@react-three/drei";
+import { Center, Environment } from "@react-three/drei";
 import { Model } from "./Assci";
 
 export default function Scene() {
@@ -13,7 +13,7 @@ export default function Scene() {
         <Center>
           <Model />
         </Center>
-        {/* <Environment preset="city" /> */}
+        {/* <Environment preset="forest" /> */}
         <ambientLight intensity={1.3} />
         <directionalLight position={[-1, 0, 0]} />
         <MouseLight />
@@ -31,6 +31,6 @@ const MouseLight = () => {
     ref.current.position.y = pointer.y;
   });
   return (
-    <pointLight ref={ref} color={"purple"} position={[0, 0, 1]} intensity={4} />
+    <pointLight ref={ref} color={"purple"} position={[0, 0, 1]} intensity={1} />
   );
 };
