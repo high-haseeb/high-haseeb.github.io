@@ -53,6 +53,9 @@ dependencies:
   tailwindcss:
     specifier: 3.3.3
     version: 3.3.3
+  three:
+    specifier: ^0.163.0
+    version: 0.163.0
   vercel:
     specifier: ^31.4.0
     version: 31.4.0
