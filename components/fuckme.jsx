@@ -14,8 +14,8 @@ export default function Scene() {
           <Model />
         </Center>
         {/* <Environment preset="forest" /> */}
-        <ambientLight intensity={1.3} />
-        <directionalLight position={[-1, 0, 0]} />
+        {/* <ambientLight intensity={1.3} /> */}
+        {/* <directionalLight position={[-1, 0, 0]} /> */}
         <MouseLight />
         <EffectComposer>
           <primitive object={asciiEffect} />
@@ -31,6 +31,17 @@ const MouseLight = () => {
     ref.current.position.y = pointer.y;
   });
   return (
-    <pointLight ref={ref} color={"purple"} position={[0, 0, 1]} intensity={1} />
+    <group ref={ref}>
+      <pointLight
+        color={"purple"}
+        position={[0, 0, 1]}
+        intensity={1}
+      />
+      <pointLight
+        color={"purple"}
+        position={[0, 0, -1]}
+        intensity={1}
+      />
+    </group>
   );
 };
