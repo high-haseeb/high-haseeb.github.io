@@ -20,6 +20,7 @@ export default function Scene() {
         </Center>
         {/* <Environment preset="city" /> */}
         <ambientLight intensity={1.3}/>
+        <directionalLight position={[-1, 0,0]} />
         <MouseLight />
         <EffectComposer>
           <primitive object={asciiEffect} />
