@@ -11,17 +11,11 @@ export function Model(props) {
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
   useFrame((state) => {
     if (group.current) {
-      group.current.rotation.y += 0.0001;
-      const minRotationY = (-60 - 35) * DEG2RAD; // Define lower bound
-      const maxRotationY = (60 - 35) * DEG2RAD; // Define upper bound
+
+      group.current.rotation.y += 0.01;
       const minRotationX = -30 * DEG2RAD; // Define lower bound
       const maxRotationX =  30 * DEG2RAD; // Define upper bound
-      const newRotationY = group.current.rotation.y + state.pointer.x * 0.04;
-      group.current.rotation.y = clamp(
-        newRotationY,
-        minRotationY,
-        maxRotationY,
-      );
+
 
       group.current.rotation.x = clamp(
         group.current.rotation.x + state.pointer.y * 0.05,

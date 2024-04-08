@@ -110,7 +110,7 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
     float greyscaled = greyscale(pixelized.rgb).r;
 
     if (uInvert) {
-        greyscaled = 1.3 - greyscaled;
+        greyscaled = 1.0 - greyscaled;
     }
 
     float characterIndex = floor((uCharactersCount - 1.0) * greyscaled);
@@ -118,7 +118,7 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
     vec2 offset = vec2(characterPosition.x, -characterPosition.y) / SIZE;
     vec2 charUV = mod(uv * (cell / SIZE), 1.0 / SIZE) - vec2(0., 1.0 / SIZE) + offset;
     vec4 asciiCharacter = texture2D(uCharacters, charUV);
-    asciiCharacter.rgb =  pixelized.rgb *  asciiCharacter.r;
+    asciiCharacter.rgb =  vec3(0.6, 0.1, cnoise(pixelized.rgb + time)) *  asciiCharacter.r;
     asciiCharacter.a = pixelized.a;
     outputColor = asciiCharacter;
 }
