@@ -21,3 +21,24 @@ export default function Scene() {
     </div>
   );
 }
+const MouseLight = () => {
+  const ref = useRef();
+  useFrame(({ pointer }) => {
+    ref.current.position.x = pointer.x;
+    ref.current.position.y = pointer.y;
+  });
+  return (
+    <group ref={ref}>
+      <pointLight
+        color={"purple"}
+        position={[0, 0, 1]}
+        intensity={1}
+      />
+      <pointLight
+        color={"purple"}
+        position={[0, 0, -1]}
+        intensity={1}
+      />
+    </group>
+  );
+};

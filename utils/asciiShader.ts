@@ -136,7 +136,7 @@ export default class ASCIIEffect extends Effect {
     constructor({
         characters = ` .:,'-^=*+?!|0#X%WM@`,
         fontSize = 54,
-        cellSize = 12,
+        cellSize = 16,
         color = "#ffffff",
         invert = true,
     }: IASCIIEffectProps = {}) {
