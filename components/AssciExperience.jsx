@@ -4,6 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
 import { Center, Environment } from "@react-three/drei";
 import { Model } from "./Assci";
+import * as THREE from 'three'
 
 export default function Scene() {
   const asciiEffect = React.useMemo(() => new ASCIIEffect(), []);
@@ -13,10 +14,6 @@ export default function Scene() {
         <Center>
           <Model />
         </Center>
-        {/* <Environment preset="forest" /> */}
-        {/* <ambientLight intensity={1.3} /> */}
-        {/* <directionalLight position={[-1, 0, 0]} /> */}
-        <MouseLight />
         <EffectComposer>
           <primitive object={asciiEffect} />
         </EffectComposer>

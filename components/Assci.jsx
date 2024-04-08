@@ -98,7 +98,7 @@ float cnoise(vec3 P){
 
   void main() {
     vec3 normal = 0.5 * normalize(vNormal) + 0.5;
-    gl_FragColor = vec4( mix(color1, color2, cnoise(vPosition + time) * 2.) , 1.0);
+    gl_FragColor = vec4( mix(color1, color2, cnoise(vPosition + time + length(mouse) )   ) , 1.0);
   }
 `;
   const vertexShader = `
@@ -113,35 +113,43 @@ void main() {
 }
 `;
   const materialRef = useRef(null);
+  const bgRef = useRef(null);
   useFrame(({ clock, pointer }) => {
-    if (!materialRef.current) return;
+    if (!materialRef.current ) return;
     materialRef.current.uniforms.time.value = clock.getElapsedTime();
     materialRef.current.uniforms.mouse.value.set(pointer.x, pointer.y);
+    // bgRef.current.rotation.y += 0.01 
   });
 
   return (
-    <group
-      ref={group}
-      {...props}
-      dispose={null}
-      rotation={[0, -35 * DEG2RAD, 0]}
-    >
-      <mesh
-        geometry={nodes.Logo.geometry}
-        position={[-0.092, 1.277, 0.013]}
-        rotation={[-0.924, -0.503, -2.191]}
+    <>
+      {/* <mesh ref={bgRef}> */}
+      {/*   <torusKnotGeometry args={[10]} /> */}
+      {/*   <meshNormalMaterial side={THREE.DoubleSide} /> */}
+      {/* </mesh> */}
+      <group
+        ref={group}
+        {...props}
+        dispose={null}
+        rotation={[0, -35 * DEG2RAD, 0]}
       >
-        <shaderMaterial
-          ref={materialRef}
-          fragmentShader={fragmentShader}
-          vertexShader={vertexShader}
-          uniforms={{
-            time: { value: 0.0 },
-            mouse: { value: new THREE.Vector2(0.0) },
-          }}
-        />
-      </mesh>
-    </group>
+        <mesh
+          geometry={nodes.Logo.geometry}
+          position={[-0.092, 1.277, 0.013]}
+          rotation={[-0.924, -0.503, -2.191]}
+        >
+          <shaderMaterial
+            ref={materialRef}
+            fragmentShader={fragmentShader}
+            vertexShader={vertexShader}
+            uniforms={{
+              time: { value: 0.0 },
+              mouse: { value: new THREE.Vector2(0.0) },
+            }}
+          />
+        </mesh>
+      </group>
+    </>
   );
 }
 
