@@ -118,7 +118,7 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
     vec2 offset = vec2(characterPosition.x, -characterPosition.y) / SIZE;
     vec2 charUV = mod(uv * (cell / SIZE), 1.0 / SIZE) - vec2(0., 1.0 / SIZE) + offset;
     vec4 asciiCharacter = texture2D(uCharacters, charUV);
-    asciiCharacter.rgb =  vec3(0.6, 0.1, cnoise(pixelized.rgb + time)) *  asciiCharacter.r;
+    asciiCharacter.rgb =  vec3(0.5, 0.1, cnoise(pixelized.rgb + time)) *  asciiCharacter.r;
     asciiCharacter.a = pixelized.a;
     outputColor = asciiCharacter;
 }
@@ -136,7 +136,7 @@ export default class ASCIIEffect extends Effect {
     constructor({
         characters = ` .:,'-^=*+?!|0#X%WM@`,
         fontSize = 54,
-        cellSize = 16,
+        cellSize = 8,
         color = "#ffffff",
         invert = false,
     }: IASCIIEffectProps = {}) {
