@@ -227,7 +227,7 @@ class AsciiNode extends NodeBase {
 		this.element.style.height = "100%";
 		// this.element.style.fontSize = "18px";
 
-		const colors = ["#0006DC", "#6feffb", "white", "blue", "darkblue", "lightblue"];
+		const colors = ["#0006DC", "white", "blue", "darkblue", "lightblue"];
 
 		this.element.style.color =
 			colors[Math.floor(Math.random() * colors.length)];

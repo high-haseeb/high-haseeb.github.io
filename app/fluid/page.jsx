@@ -13,10 +13,10 @@ const FluidSim = () => {
   useEffect(() => {
     if (!puddleEl.current) return;
     let puddle = new Puddle(puddleEl.current);
-    puddle.setNodeSize(24);
+    puddle.setNodeSize(14);
     puddle.setupGrid(); // To initialize the puddle
     puddle.setNodeStyle("ascii"); // nodeStyle one of ["water", "party", "ascii", "base"]  // Default "base"
-    puddle.setDampeningRatio(0.4); // Default 0.8  between 0 and 1
+    puddle.setDampeningRatio(0.5); // Default 0.8  between 0 and 1
   }, []);
   return (
     <div className="bg-[#181818] w-screen h-screen overflow-hidden p-0 m-0">
