@@ -3,7 +3,7 @@ import ASCIIEffect from "@/utils/asciiShader";
 import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
-import { Center } from "@react-three/drei";
+import { Center, Environment } from "@react-three/drei";
 import { Model } from "./Assci";
 
 export default function Scene() {
@@ -14,8 +14,10 @@ export default function Scene() {
         <Center>
           <Model />
         </Center>
+        <ambientLight/>
+        <Environment preset="city" />
         <EffectComposer>
-          <primitive object={asciiEffect} />
+          {/* <primitive object={asciiEffect} /> */}
         </EffectComposer>
       </Canvas>
     </div>
