@@ -20,11 +20,11 @@ const FluidSim = () => {
   }, []);
   return (
     <div className="bg-[#181818] w-screen h-screen overflow-hidden p-0 m-0">
+      <Scene />
       <div
         ref={puddleEl}
-        className="w-screen h-screen absolute top-0 left-0 p-0 m-0"
+        className="w-screen h-screen absolute top-0 left-0 p-0 m-0 pointer-events-none"
       />
-      <Scene />
     </div>
   );
 };

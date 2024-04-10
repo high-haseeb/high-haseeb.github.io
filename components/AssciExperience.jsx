@@ -36,6 +36,6 @@ const PointerLight = () => {
   })
 
   return(
-  <pointLight  color={'lightblue'} intensity={2}  ref={lightRef}/>
+  <pointLight  color={'white'} intensity={2}  ref={lightRef}/>
   )
 }
