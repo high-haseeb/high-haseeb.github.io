@@ -104,21 +104,25 @@ float cnoise(vec3 P){
 }
 
 void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
+
     vec2 cell = resolution / uCellSize;
     vec2 grid = 1.0 / cell;
     vec2 pixelizedUV = grid * (0.5 + floor(uv / grid));
-    vec4 pixelized = texture2D(inputBuffer, pixelizedUV);
+    vec4 pixelized = texture2D(inputBuffer, uv);
 
-float greyscaled = greyscale(pixelized.rgb).g;
-    float factor = distance(uv, uMouse) - cnoise(vec3(uv, 1.0) + time) * 0.2;
-    greyscaled =  1.0 - smoothstep(0., 1., factor * 0.2 ) - greyscaled;
+    float greyscaled = greyscale(pixelized.rgb).r;
+    // float greyscaled = smoothstep(0., 1., cnoise(vec3(uv, 0.) + time * 0.2));
+    
+    // float factor = distance(uv, uMouse) - cnoise(vec3(inputColor.x,uv) + time);
+    // greyscaled =  1.0 - smoothstep(0., 0.4, factor) ;//- greyscaled;
 
     float characterIndex = floor((uCharactersCount - 1.0) * greyscaled);
     vec2 characterPosition = vec2(mod(characterIndex, SIZE.x), floor(characterIndex / SIZE.y));
     vec2 offset = vec2(characterPosition.x, -characterPosition.y) / SIZE;
     vec2 charUV = mod(uv * (cell / SIZE), 1.0 / SIZE) - vec2(0., 1.0 / SIZE) + offset;
     vec4 asciiCharacter = texture2D(uCharacters, charUV);
-    asciiCharacter.rgb = pixelized.rgb * asciiCharacter.r ;
+vec3 blue = vec3(0.0, 108.0, 255.0) / 255.0;
+    asciiCharacter.rgb = blue * asciiCharacter.r ;
     asciiCharacter.a = pixelized.a;
     outputColor = asciiCharacter;
 }
@@ -134,7 +138,7 @@ export interface IASCIIEffectProps {
 
 export default class ASCIIEffect extends Effect {
     constructor({
-        characters = ` .:,'-^=*+?!|0#X%WM@`,
+        characters = `@MBHENR#KWXDFPQASUZbdehx*8Gm&04LOVYkpq5Tagns69owz$CIu23Jcfry%1v7l+it[] {}?j|()=~!-/<>"^_';,:\`. `,
         fontSize = 54,
         cellSize = 12,
         color = "#ffffff",

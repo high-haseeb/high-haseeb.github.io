@@ -212,7 +212,8 @@ class PartyNode extends NodeBase {
 class AsciiNode extends NodeBase {
 	constructor(xx, yy, data, mathMode) {
 		super(xx, yy, data, mathMode);
-		this.asciiShades = [..." .:,'-^=*+?!|0#X%WM@"];
+		this.asciiShades = [..."@MBHENR#KWXDFPQASUZbdehx*8Gm&04LOVYkpq5Tagns69owz$CIu23Jcfry%1v7l+it[] {}?j|()=~!-/<>\"^_';,:`. "];
+		this.asciiShades.reverse()
 		this.asciiThreshold = [];
 		for (let index = 0; index < this.asciiShades.length; ++index) {
 			this.asciiThreshold.push((index * 100.0) / (this.asciiShades.length - 1));
@@ -229,8 +230,8 @@ class AsciiNode extends NodeBase {
 
 		const colors = ["#0006DC", "white", "blue", "darkblue", "lightblue"];
 
-		this.element.style.color =
-			colors[Math.floor(Math.random() * colors.length)];
+		this.element.style.color = "white";
+			// colors[Math.floor(Math.random() * colors.length)];
 		this.drawNode(0);
 		this.applyListeners();
 		return this.element;
