@@ -3,8 +3,7 @@ import ASCIIEffect from "@/utils/asciiShader";
 import React, { useState, useEffect, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
-import { PresentationControls } from "@react-three/drei";
-import { useRouter } from "next/router";
+import { OrbitControls} from "@react-three/drei";
 
 export default function Scene({ modelId }) {
   const asciiEffect = React.useMemo(
@@ -28,6 +27,7 @@ export default function Scene({ modelId }) {
         {/* <OrbitControls enableZoom={false} /> */}
         {/* <Environment preset="studio" /> */}
         <ambientLight intensity={4} />
+        <OrbitControls/>
         <EffectComposer>
           <primitive object={asciiEffect} />
         </EffectComposer>
@@ -52,10 +52,8 @@ const Model = ({ modelId }) => {
     modelRef.current.rotation.y += 0.005;
   });
   return (
-    <PresentationControls>
-      <group ref={modelRef}>
-        {ModelComponent && <ModelComponent scale={0.5} />}
-      </group>
-    </PresentationControls>
+<>
+      {ModelComponent && <ModelComponent scale={0.5} />}
+</>
   );
 };
