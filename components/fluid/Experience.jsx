@@ -3,12 +3,8 @@ import ASCIIEffect from "@/utils/asciiShader";
 import React, { useState, useEffect, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
-import {
-  Center,
-  Environment,
-  OrbitControls,
-  PresentationControls,
-} from "@react-three/drei";
+import { PresentationControls } from "@react-three/drei";
+import { useRouter } from "next/router";
 
 export default function Scene({ modelId }) {
   const asciiEffect = React.useMemo(
