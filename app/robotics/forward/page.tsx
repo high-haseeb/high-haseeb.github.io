@@ -1,10 +1,10 @@
 "use client";
-import { Center, Environment, GizmoHelper, GizmoViewcube, OrbitControls } from "@react-three/drei";
+import { Center, Environment, Line, GizmoHelper, GizmoViewcube, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 import useRobotStore from "@/components/robotics/sotre";
-import React, { useEffect, useRef } from "react";
-import { Mesh } from "three";
+import React, { useEffect, useRef, useState } from "react";
+import { Mesh, LineBasicMaterial, BufferGeometry, Vector3 } from "three";
 import * as THREE from "three";
 
 const Page = () => {
@@ -27,6 +27,7 @@ const Page = () => {
           <GizmoViewcube />
         </GizmoHelper>
         <Center>
+          <Path />
           <Robot />
         </Center>
       </Canvas>
@@ -58,10 +59,10 @@ const Robot = () => {
 };
 const Link = ({ start, end, log = false }: { start: THREE.Vector3; end: THREE.Vector3; log?: boolean }) => {
   const ref = useRef<THREE.Mesh>(null);
+  const length = start.distanceTo(end);
 
   useEffect(() => {
     if (ref.current) {
-      const length = start.distanceTo(end);
       ref.current.scale.set(1, length, 1);
 
       const middle = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
@@ -78,11 +79,12 @@ const Link = ({ start, end, log = false }: { start: THREE.Vector3; end: THREE.Ve
 
   if (log) {
     const target = new THREE.Vector3();
-    const { setPosition } = useRobotStore();
+    const { setPosition, addPathPoint } = useRobotStore();
     useFrame(() => {
       if (ref.current) {
         ref.current.getWorldPosition(target);
         setPosition([target.x.toFixed(2), target.y.toFixed(2), target.z.toFixed(2)]);
+        addPathPoint(target.clone().add({x: 0, y: length, z: 0}));
       }
     });
   }
@@ -102,5 +104,11 @@ const Solid = ({ rotation, color = "lime" }: { rotation: [number, number, number
       <meshStandardMaterial color={color} />
     </mesh>
   );
+};
+
+const Path = () => {
+  const { pathPoints } = useRobotStore();
+
+  return <Line points={pathPoints} color={"red"} />;
 };
 export default Page;

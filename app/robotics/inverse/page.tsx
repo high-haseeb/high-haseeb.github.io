@@ -1,5 +1,5 @@
 "use client";
-import { Center, Environment, GizmoHelper, GizmoViewcube, OrbitControls } from "@react-three/drei";
+import { Center, Line, Environment, GizmoHelper, GizmoViewcube, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 import useRobotStore from "@/components/robotics/sotre";
@@ -38,6 +38,7 @@ const Page = () => {
           <GizmoHelper alignment="bottom-left">
           <GizmoViewcube/>
           </GizmoHelper>
+          {/* <Path/> */}
         <Center>
           <Robot />
         </Center>
@@ -124,13 +125,12 @@ const Link = ({ start, end, log = false }: { start: THREE.Vector3; end: THREE.Ve
   }, [start, end]);
 
   if (log) {
-    // const target = new THREE.Vector3();
-    const { setPosition } = useRobotStore();
-    // ref.current.getWorldPosition(target);
+    const { setPosition, addPathPoint } = useRobotStore();
     useFrame(() => {
       if (ref.current) {
         const target = end.clone().applyMatrix4(ref.current.matrixWorld);
         setPosition([target.x.toFixed(2), target.y.toFixed(2), target.z.toFixed(2)]);
+        addPathPoint(target.clone());
       }
     });
   }
@@ -152,4 +152,11 @@ const Solid = ({ rotation, color = "lime" }: { rotation: [number, number, number
   );
 };
 
+const Path = () => {
+  const { pathPoints } = useRobotStore();
+
+  return <Line points={pathPoints} color={"red"} />;
+};
+
 export default Page;
+
