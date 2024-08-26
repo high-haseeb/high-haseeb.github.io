@@ -1,5 +1,5 @@
 "use client";
-import { Center, Environment, OrbitControls } from "@react-three/drei";
+import { Center, Environment, GizmoHelper, GizmoViewcube, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 import useRobotStore from "@/components/robotics/sotre";
@@ -23,6 +23,9 @@ const Page = () => {
       <Canvas className="w-full h-full">
         <Environment preset="city" />
         <OrbitControls />
+        <GizmoHelper alignment="bottom-left">
+          <GizmoViewcube />
+        </GizmoHelper>
         <Center>
           <Robot />
         </Center>
