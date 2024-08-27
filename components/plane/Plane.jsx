@@ -13,6 +13,7 @@ const Plane = () => (
 const Canvas = ({ finalTarget }) => {
   const [target, setTarget] = useState(0);
   const [color, setColor] = useState("#00ffff");
+  const [hasReached, setHasReached] = useState(false);
   const canvasRef = useRef(null);
   const timeRef = useRef(0);
 
@@ -100,7 +101,8 @@ const Canvas = ({ finalTarget }) => {
         if (!hasReachedEnd) {
           offset += speed;
         }
-      }else{
+      } else {
+        setTimeout(() => setHasReached(true), 1000);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.save();
         // ctx.translate(x, y);
@@ -118,23 +120,28 @@ const Canvas = ({ finalTarget }) => {
     animate();
   }, []);
 
-
   return (
     <div className="w-1/2 h-1/2 relative overflow-hidden">
-      <img src="/images/bg.svg" className="w-[200%] h-[200%] top-0 -left-1/2 absolute animate-slowSpin" />
       <div
         className="absolute top-0 left-0 w-full h-full"
         style={{ background: `radial-gradient(ellipse at center, ${color}55, ${color}09, transparent )`, transition: "background" }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-9xl z-50">{target.toFixed(2)}x</div>
       <canvas className="w-full h-full absolute top-0 left-0 z-10" ref={canvasRef} />
+      {hasReached ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-9xl z-50">{target.toFixed(2)}x</div>
+          <img src="/images/bg.svg" className="w-[200%] h-[200%] top-0 -left-1/2 absolute animate-slowSpin" />
+        </>
+      )}
     </div>
   );
 };
 
 const Loader = () => (
   <img
-    src="/images/path5.svg"
+    src="/images/prop.svg"
     width={100}
     height={100}
     className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-1/4 animate-propeller"
