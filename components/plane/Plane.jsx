@@ -2,15 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 
 const Plane = () => (
   <div className="">
-    <div className="text-6xl p-4">Plane Game</div>
-    <div className="w-screen h-screen flex items-center justify-center absolute top-0 left-0">
-      <Canvas finalTarget={100} />
+    <div className="p-4 text-6xl">Plane Game</div>
+    <div className="absolute left-0 top-0 flex h-screen w-screen items-center justify-center">
+      <PlaneGame finalTarget={2000} speed={0.1} />
     </div>
-    <div className="text-sm absolute bottom-4 right-10">Made with ☕ & 🧡 by high-haseeb</div>
+    <div className="absolute bottom-4 right-10 text-sm">
+      Made with ☕ & 🧡 by high-haseeb
+    </div>
   </div>
 );
 
-const Canvas = ({ finalTarget }) => {
+const PlaneGame = ({ finalTarget, speed }) => {
   const [target, setTarget] = useState(0);
   const [color, setColor] = useState("#00ffff");
   const [hasReached, setHasReached] = useState(false);
@@ -20,20 +22,22 @@ const Canvas = ({ finalTarget }) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // canvas.width = window.innerWidth;
+    // canvas.height = window.innerHeight;
+    const style = getComputedStyle(canvas);
+    canvas.width = parseInt(style.width, 10);
+    canvas.height = parseInt(style.height, 10);
 
     // Graph parameters
     const padding = 40;
     const graphHeight = canvas.height - padding * 2;
     const graphWidth = canvas.width - padding * 2;
     const numPoints = 100;
-    const speed = 0.4;
 
-    let pow = 1.5;
+    let pow = 2.0;
     let planeImgIndex = 0;
-    let data = Array.from({ length: numPoints }, (_, i) => Math.pow(pow, i / 10));
-    let maxValue = Math.max(...data);
+    let data = Array.from({ length: numPoints }, (_, i) => Math.pow(pow, i/10));
+    let maxValue = 100;//100;//Math.max(...data);
     let offset = 0;
     let hasReachedEnd = false;
     let localTarget = 0;
@@ -44,29 +48,26 @@ const Canvas = ({ finalTarget }) => {
     planeImages[2].src = "/images/plane2.png";
 
     const aspectRatio = planeImages[0].height / planeImages[0].width;
-    const img_w = 400;
+    const img_w = canvas.width/3;
     const img_h = img_w * aspectRatio;
-
-    const normalizeSinValue = (value, min, max) => {
-      const normalized = (Math.sin(value) + 1) / 2;
-      return normalized * (max - min) + min;
-    };
 
     const drawGraph = () => {
       planeImgIndex += 0.1;
       if (localTarget <= finalTarget) {
-        localTarget += 0.4;
+        localTarget += speed;
         setTarget(localTarget);
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.beginPath();
-        ctx.moveTo(padding, padding + graphHeight - (data[0] / maxValue) * graphHeight);
+        ctx.moveTo(
+          padding,
+          padding + graphHeight - (data[0] / maxValue) * graphHeight,
+        );
 
         if (hasReachedEnd) {
+          maxValue += Math.sin(timeRef.current) * 0.9; 
           timeRef.current += 0.01;
-          data = Array.from({ length: numPoints }, (_, i) => Math.pow(normalizeSinValue(Math.sin(timeRef.current), 1.1, 2.0), i / 10));
-          maxValue = Math.max(...data);
         }
 
         for (let i = 0; i < offset; i++) {
@@ -77,6 +78,7 @@ const Canvas = ({ finalTarget }) => {
 
           if (i > 0 && x + img_w >= graphWidth + padding) {
             hasReachedEnd = true;
+            setColor("#ff0000");
           }
 
           ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -92,14 +94,17 @@ const Canvas = ({ finalTarget }) => {
         ctx.lineWidth = 6;
         ctx.stroke();
 
-        ctx.lineTo(padding + ((offset % numPoints) / (numPoints - 1)) * graphWidth, canvas.height - padding);
+        ctx.lineTo(
+          padding + ((offset % numPoints) / (numPoints - 1)) * graphWidth,
+          canvas.height - padding,
+        );
         ctx.lineTo(padding, canvas.height - padding);
         ctx.closePath();
         ctx.fillStyle = "rgba(217, 0, 0, 0.3)";
         ctx.fill();
 
         if (!hasReachedEnd) {
-          offset += speed;
+          offset += 0.4;
         }
       } else {
         setTimeout(() => setHasReached(true), 1000);
@@ -121,18 +126,29 @@ const Canvas = ({ finalTarget }) => {
   }, []);
 
   return (
-    <div className="w-1/2 h-1/2 relative overflow-hidden">
+    <div className="relative h-1/2 w-full overflow-hidden md:h-1/2 md:w-1/2">
       <div
-        className="absolute top-0 left-0 w-full h-full"
-        style={{ background: `radial-gradient(ellipse at center, ${color}55, ${color}09, transparent )`, transition: "background" }}
+        className="absolute left-0 top-0 h-full w-full"
+        style={{
+          background: `radial-gradient(ellipse at center, ${color}55, ${color}09, transparent )`,
+          transition: "background",
+        }}
       />
-      <canvas className="w-full h-full absolute top-0 left-0 z-10" ref={canvasRef} />
+      <canvas
+        className="absolute left-0 top-0 z-10 h-full w-full"
+        ref={canvasRef}
+      />
       {hasReached ? (
         <Loader />
       ) : (
         <>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-9xl z-50">{target.toFixed(2)}x</div>
-          <img src="/images/bg.svg" className="w-[200%] h-[200%] top-0 -left-1/2 absolute animate-slowSpin" />
+          <div className="absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-9xl text-white">
+            {target.toFixed(2)}x
+          </div>
+          <img
+            src="/images/bg.svg"
+            className="absolute -left-1/2 top-0 h-[200%] w-[200%] animate-slowSpin"
+          />
         </>
       )}
     </div>
@@ -144,7 +160,7 @@ const Loader = () => (
     src="/images/prop.svg"
     width={100}
     height={100}
-    className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-1/4 animate-propeller"
+    className="absolute left-1/2 top-1/2 w-1/4 -translate-x-1/2 -translate-y-1/2 animate-propeller"
   />
 );
 
