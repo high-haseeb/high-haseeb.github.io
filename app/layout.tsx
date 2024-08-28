@@ -11,11 +11,7 @@ const meditative = localFont({
   variable: "--font-meditative",
 })
 const boring = localFont({
-  src: [
-    {path: "../public/fonts/nimbus/NimbusSans-Bold.ttf", weight: '500', style: 'bold'},
-    {path: "../public/fonts/nimbus/NimbusSans-Regular.ttf", weight: '300', style: 'regular'},
-    {path: "../public/fonts/nimbus/NimbusSans-BoldItalic.ttf", weight: '500', style: 'italic'},
-  ],
+  src: "../public/fonts/nimbus/NimbusSans-Bold.ttf",
   variable: "--font-boring",
 })
 
