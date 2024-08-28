@@ -4,7 +4,7 @@ const Plane = () => (
   <div className="">
     <div className="p-4 text-6xl">Plane Game</div>
     <div className="absolute left-0 top-0 flex h-screen w-screen items-center justify-center">
-      <PlaneGame finalTarget={2000} speed={0.1} />
+      <PlaneGame finalTarget={300} speed={0.1} />
     </div>
     <div className="absolute bottom-4 right-10 text-sm">
       Made with ☕ & 🧡 by high-haseeb
@@ -22,8 +22,6 @@ const PlaneGame = ({ finalTarget, speed }) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    // canvas.width = window.innerWidth;
-    // canvas.height = window.innerHeight;
     const style = getComputedStyle(canvas);
     canvas.width = parseInt(style.width, 10);
     canvas.height = parseInt(style.height, 10);
@@ -36,8 +34,10 @@ const PlaneGame = ({ finalTarget, speed }) => {
 
     let pow = 2.0;
     let planeImgIndex = 0;
-    let data = Array.from({ length: numPoints }, (_, i) => Math.pow(pow, i/10));
-    let maxValue = 100;//100;//Math.max(...data);
+    let data = Array.from({ length: numPoints }, (_, i) =>
+      Math.pow(pow, i / 10),
+    );
+    let maxValue = canvas.height /2 ;
     let offset = 0;
     let hasReachedEnd = false;
     let localTarget = 0;
@@ -48,7 +48,7 @@ const PlaneGame = ({ finalTarget, speed }) => {
     planeImages[2].src = "/images/plane2.png";
 
     const aspectRatio = planeImages[0].height / planeImages[0].width;
-    const img_w = canvas.width/3;
+    const img_w = canvas.width / 4;
     const img_h = img_w * aspectRatio;
 
     const drawGraph = () => {
@@ -66,7 +66,7 @@ const PlaneGame = ({ finalTarget, speed }) => {
         );
 
         if (hasReachedEnd) {
-          maxValue += Math.sin(timeRef.current) * 0.9; 
+          maxValue += Math.sin(timeRef.current) * 0.9;
           timeRef.current += 0.01;
         }
 
@@ -107,7 +107,7 @@ const PlaneGame = ({ finalTarget, speed }) => {
           offset += 0.4;
         }
       } else {
-        setTimeout(() => setHasReached(true), 1000);
+        setTimeout(() => setHasReached(true), 2000);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.save();
         // ctx.translate(x, y);
@@ -142,7 +142,12 @@ const PlaneGame = ({ finalTarget, speed }) => {
         <Loader />
       ) : (
         <>
-          <div className="absolute left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-9xl text-white">
+          <div
+            className={`absolute left-1/2 top-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center text-6xl text-white md:text-9xl ${target >= finalTarget ? "text-red-500" : ""}`}
+          >
+            <span className="text-lg md:text-5xl">
+              {target >= finalTarget && "Flew Away"}
+            </span>
             {target.toFixed(2)}x
           </div>
           <img
