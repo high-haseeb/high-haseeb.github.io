@@ -1,21 +1,15 @@
-import Scene from "@/components/three/Scene";
-import Adjectives from "@/components/ui/common/Adjectives";
-import Navbar from "@/components/ui/common/Navbar";
+import Bananas from "@/components/three/Hero";
 import Footer from "@/components/ui/Footer";
+import MousePointer from "@/components/ui/MousePointer";
 
 export default function Home() {
   return (
-    <main className="relative h-screen w-screen select-none overflow-y-scroll bg-brBlack text-brWhite">
-      <Navbar />
-      <div className="fixed z-10 p-16 w-1/2">
-        <div className="pointer-events-auto z-10 mt-32 text-[15rem] font-bold leading-[0.85]">
-          <Adjectives />
-          <div className="font-black">HASEEB</div>
-          <div className="text-4xl">taking tech to new highs!</div>
-        </div>
+    <main className="relative h-[200vh] w-screen select-none font-boring">
+      <MousePointer/>
+      <div className="z-10 bg-brBlack fixed h-screen">
+        <div className="w-screen h-screen"><Bananas count={100}/></div>
       </div>
-
-      <div className="w-screen h-screen"></div>
+        <div className="h-screen w-screen"></div>
 
       <Footer />
     </main>
