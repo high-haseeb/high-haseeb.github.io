@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import {Inter} from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -14,6 +15,11 @@ const meditative = localFont({
   src: "../public/fonts/meditative/Meditative.ttf",
   variable: "--font-meditative",
 })
+const inter = Inter({
+  subsets: ['latin'], // Specify the subsets you need
+  variable: '--font-inter', // Custom CSS variable name for the font
+  display: 'swap', // Control font loading behavior
+});
 
 export const metadata: Metadata = {
   title: "high-HASEEB",
@@ -27,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${coolvetica.variable} ${boring.variable} ${meditative.variable} font-sans`}>{children}</body>
+      <body className={`${coolvetica.variable} ${inter.variable} ${boring.variable} ${meditative.variable} font-sans`}>{children}</body>
     </html>
   );
 }

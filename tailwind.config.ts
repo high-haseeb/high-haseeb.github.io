@@ -6,6 +6,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: "var(--font-coolvetica)",
+        inter: "var(--font-inter)",
         meditative: "var(--font-meditative)",
         boring: "var(--font-boring)"
       },
