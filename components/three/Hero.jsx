@@ -269,7 +269,7 @@ const ResponsiveText = () => {
 
   return (
     <Text
-      font="fonts/nimbus/NimbusSans-Bold.ttf"
+      font="fonts/NimbusSans-Bold.ttf"
       position={[0, 0, 4]}
       scale={[fontSize, fontSize, fontSize]} // Apply responsive scale
     >
