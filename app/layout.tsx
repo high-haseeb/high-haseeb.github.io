@@ -10,6 +10,14 @@ const meditative = localFont({
   src: "../public/fonts/meditative/Meditative.ttf",
   variable: "--font-meditative",
 })
+const boring = localFont({
+  src: [
+    {path: "../public/fonts/nimbus/NimbusSans-Bold.ttf", weight: '500', style: 'bold'},
+    {path: "../public/fonts/nimbus/NimbusSans-Regular.ttf", weight: '300', style: 'regular'},
+    {path: "../public/fonts/nimbus/NimbusSans-BoldItalic.ttf", weight: '500', style: 'italic'},
+  ],
+  variable: "--font-boring",
+})
 
 export const metadata: Metadata = {
   title: "high-HASEEB",
@@ -23,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${coolvetica.variable} ${meditative.variable} font-sans`}>{children}</body>
+      <body className={`${coolvetica.variable} ${boring.variable} ${meditative.variable} font-sans`}>{children}</body>
     </html>
   );
 }

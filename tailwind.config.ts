@@ -7,6 +7,7 @@ const config: Config = {
       fontFamily: {
         sans: "var(--font-coolvetica)",
         meditative: "var(--font-meditative)",
+        boring: "var(--font-boring)"
       },
       keyframes: {
         propeller: {
