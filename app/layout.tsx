@@ -6,13 +6,13 @@ const coolvetica = localFont({
   src: "../public/fonts/bebas/BebasNeue-Regular.ttf",
   variable: "--font-coolvetica",
 });
+const boring = localFont({
+  src: "../public/fonts/NimbusSans-Bold.ttf",
+  variable: "--font-boring",
+})
 const meditative = localFont({
   src: "../public/fonts/meditative/Meditative.ttf",
   variable: "--font-meditative",
-})
-const boring = localFont({
-  src: "../public/fonts/nimbus/NimbusSans-Bold.ttf",
-  variable: "--font-boring",
 })
 
 export const metadata: Metadata = {
