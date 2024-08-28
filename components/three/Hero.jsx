@@ -2,7 +2,7 @@
 import * as THREE from "three";
 import { useRef, useState } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
-import { useGLTF, Detailed, Environment, Text } from "@react-three/drei";
+import { useGLTF, Detailed, Environment, Text, Loader } from "@react-three/drei";
 import {
   EffectComposer,
   DepthOfField,
@@ -234,6 +234,7 @@ const colors = [
   const randColor = () =>
     colors[Math.floor(Math.random() * (colors.length - 1))];
   return (
+    <><Loader/>
     <Canvas flat gl={{ antialias: false }} dpr={[1, 1.5]} camera={{ position: [0, 0, 10], fov: 20, near: 0.01, far: depth + 15 }} className="h-full w-full" >
       <spotLight position={[10, 20, 10]} penumbra={1} decay={0} intensity={3} color="orange" />
       {Array.from({ length: count }, (_, i) => {
@@ -255,7 +256,7 @@ const colors = [
       <EffectComposer disableNormalPass multisampling={0}>
         <DepthOfField target={[0, 0, 60]} focalLength={0.4} bokehScale={14} height={700} />
       </EffectComposer>
-    </Canvas>
+    </Canvas></>
   );
 }
 
