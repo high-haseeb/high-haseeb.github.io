@@ -8,7 +8,7 @@ const Footer = () => {
       </div>
       <div className="text-lg md:text-5xl leading-tight md:leading-tighter tracking-tight mt-10 md:mt-20">
         Contact me via email on <br />
-        <span>haseebkhalidorigianal@gmail.com</span> or <br />
+        <span>haseebkhalidoriginal@gmail.com</span> or <br />
         via mobile on +92 03038023397
       </div>
       {/* <div className="italic text-sm md:text-xl tracking-tight absolute bottom-4 right-4 md:right-10"> */}
